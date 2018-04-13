@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Joker {
 
-    private static List<String> JOKES;
+    private static final List<String> JOKES = new ArrayList<>();
     private static final Random RANDOM = new Random();
 
     //For test only
@@ -31,7 +31,6 @@ public class Joker {
     }
 
     private static void initInMemoryJokes() {
-        JOKES = new ArrayList<>();
         JOKES.add("Police officer talks to a driver: Your tail light is broken, your tires must be exchanged and your bumper hangs halfway down. That will be 300 dollars.\nDriver: Alright, go ahead. They want twice as much as that at the garage.");
         JOKES.add("Why did the physics teacher break up with the biology teacher?\nThere was no chemistry.");
         JOKES.add("Q. Why do the French like to eat snails so much?\nA. They can’t stand fast food.\n");
