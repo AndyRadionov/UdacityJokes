@@ -52,7 +52,6 @@ public class Joker {
 
         InputStream in = Joker.class.getResourceAsStream("/jokes.txt");
         if (in == null) {
-            JOKES = Collections.emptyList();
             return;
         }
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
@@ -63,7 +62,7 @@ public class Joker {
                 JOKES.add(joke);
             }
         } catch (IOException e) {
-            JOKES = Collections.emptyList();
+            e.printStackTrace();
 
         } finally {
             try {
