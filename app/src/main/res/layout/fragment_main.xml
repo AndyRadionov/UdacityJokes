@@ -10,15 +10,32 @@
     tools:context=".MainActivityFragment">
 
     <TextView
+        android:id="@+id/tv_main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/title_margin"
+        android:fontFamily="@font/lobster"
+        android:text="@string/main_title"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/title_size" />
+
+    <TextView
         android:id="@+id/instructions_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/instructions" />
+        android:layout_below="@id/tv_main_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/elements_margin"
+        android:text="@string/instructions"
+        android:textColor="@android:color/black" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/instructions_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/elements_margin"
         android:onClick="tellJoke"
         android:text="@string/button_text" />
 
