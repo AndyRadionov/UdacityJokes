@@ -1,13 +1,11 @@
 package io.github.andyradionov.javajokeslib;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 public class Joker {
@@ -15,19 +13,31 @@ public class Joker {
     private static final List<String> JOKES = new ArrayList<>();
     private static final Random RANDOM = new Random();
 
-    //For test only
-    public static void main(String[] args) {
-        String s = new Joker().getJoke();
-        System.out.println(s);
-    }
-
     public Joker() {
-        initInMemoryJokes();
+        readJokeFile();
+        if (JOKES.isEmpty()) {
+            initInMemoryJokes();
+        }
     }
 
     public String getJoke() {
         int index = RANDOM.nextInt(JOKES.size());
         return JOKES.get(index);
+    }
+
+    private static void readJokeFile() {
+
+        InputStream in = Joker.class.getResourceAsStream("/jokes.txt");
+        if (in == null) {
+            return;
+        }
+
+        try (Scanner scanner = new Scanner(in)){
+            JOKES.clear();
+            while (scanner.hasNextLine()){
+                JOKES.add(scanner.nextLine().replace("\\\\n", System.getProperty("line.separator")));
+            }
+        }
     }
 
     private static void initInMemoryJokes() {
@@ -47,43 +57,4 @@ public class Joker {
         JOKES.add("A boy breaks an old vase at a rich uncle‘s house. The uncle gets extremely angry and yells: “Do you even know how old the vase was? It was from the 17th century!” The boy sagged in relief: “Oh, good that it wasn’t new.”\n");
         JOKES.add("I’ve always thought my neighbors were quite nice people. But then they put a password on their Wi-Fi.\n");
     }
-
-    private static void readJokeFile() {
-
-        InputStream in = Joker.class.getResourceAsStream("/jokes.txt");
-        if (in == null) {
-            return;
-        }
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
-
-            JOKES.clear();
-            String joke;
-            while ((joke = reader.readLine()) != null){
-                JOKES.add(joke);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-   /* private static List<String> readJokeFile() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("jokes.txt"))) {
-
-            ArrayList<String> jokesList = new ArrayList<>();
-            String joke;
-            while ((joke = reader.readLine()) != null){
-                jokesList.add(joke);
-            }
-            return jokesList;
-        } catch (IOException e) {
-            return Collections.emptyList();
-        }
-    }*/
 }
