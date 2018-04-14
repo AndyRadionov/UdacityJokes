@@ -25,12 +25,14 @@ import io.github.andyradionov.javajokeslib.Joker;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Not local for testing needs
+    EndpointsAsyncTask mEndpointsAsyncTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     public void tellJoke(View view) {
-        new EndpointsAsyncTask(this).execute();
+        mEndpointsAsyncTask = new EndpointsAsyncTask(this);
+        mEndpointsAsyncTask.execute();
     }
 }
