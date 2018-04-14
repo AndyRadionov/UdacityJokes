@@ -13,14 +13,17 @@ public class Joker {
     private static final List<String> JOKES = new ArrayList<>();
     private static final Random RANDOM = new Random();
 
-    public Joker() {
+    private Joker() {
+    }
+
+    static {
         readJokeFile();
         if (JOKES.isEmpty()) {
             initInMemoryJokes();
         }
     }
 
-    public String getJoke() {
+    public static String getJoke() {
         int index = RANDOM.nextInt(JOKES.size());
         return JOKES.get(index);
     }

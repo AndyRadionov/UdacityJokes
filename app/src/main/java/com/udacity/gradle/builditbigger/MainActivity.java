@@ -25,13 +25,10 @@ import io.github.andyradionov.javajokeslib.Joker;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Joker mJoker;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mJoker = new Joker();
     }
 
 
@@ -59,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     public void tellJoke(View view) {
-        String joke = mJoker.getJoke();
-
-        Intent intent = new Intent(this, JokesActivity.class);
-        intent.putExtra(JokesActivity.JOKE_EXTRA, joke);
-
-        //startActivity(intent);
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        new EndpointsAsyncTask(this).execute();
     }
 }
