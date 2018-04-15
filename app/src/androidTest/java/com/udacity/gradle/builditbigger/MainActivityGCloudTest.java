@@ -14,6 +14,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
 
+/**
+ * Run on paidDebug build variant
+ */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityGCloudTest {
 

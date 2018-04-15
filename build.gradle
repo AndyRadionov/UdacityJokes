@@ -20,3 +20,11 @@ allprojects {
         google()
     }
 }
+
+task testGCEServer {
+    group "verification"
+    dependsOn ":backend:appengineRun", ":app:connectedPaidDebugAndroidTest", ":backend:appengineStop"
+    doLast {
+        println "test GCE Server Task finished"
+    }
+}
