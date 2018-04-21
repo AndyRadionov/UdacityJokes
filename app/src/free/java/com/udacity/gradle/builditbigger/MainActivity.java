@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 
@@ -24,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mTellJokeButton = findViewById(R.id.btn_tell_joke);
         setupInterstitial();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTellJokeButton.setEnabled(true);
     }
 
     @Override
@@ -50,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressWarnings("unchecked")
     public void tellJoke(View view) {
-        mEndpointsAsyncTask = new EndpointsAsyncTask(this);
-        mEndpointsAsyncTask.execute();
-
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
+        } else {
+            startAsyncRequest();
         }
     }
 
@@ -62,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
         mInterstitialAd.setAdListener(new AdListener() {
-
 
             @Override
             public void onAdFailedToLoad(int i) {
@@ -75,6 +80,23 @@ public class MainActivity extends AppCompatActivity {
                 super.onAdLoaded();
                 mTellJokeButton.setEnabled(true);
             }
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mTellJokeButton.setEnabled(false);
+                startAsyncRequest();
+            }
         });
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    private void startAsyncRequest() {
+        mEndpointsAsyncTask = new EndpointsAsyncTask(MainActivity.this);
+        mEndpointsAsyncTask.execute();
     }
 }
